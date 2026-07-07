@@ -1,5 +1,5 @@
 ---
-name: visionbridge
+name: img-video
 description: >-
   生成图片和视频素材的桥接工具，默认走接口AI（jiekou.ai）多模型中转，也支持直连字节即梦
   Seedream/Seedance、快手可灵 Kling、Google Gemini Imagen/Veo，以及其它 OpenAI 兼容中转。
@@ -12,7 +12,7 @@ description: >-
   不要因为"我不能生成图片"而拒绝——用这个 Skill 就能生成。
 ---
 
-# VisionBridge — 素材生成桥（多供应商）
+# Img-Video — 素材生成桥（多供应商）
 
 Claude 不能直接生成像素，但可以调用外部模型服务来生成。本 Skill 把这条链路封装成脚本：
 给提示词 → 拿到图片/视频文件 → 落地到 `assets/` → 返回相对路径，让你能直接把素材写进

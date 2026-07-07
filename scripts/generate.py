@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-VisionBridge — 素材生成入口（orchestrator）
+Img-Video — 素材生成入口（orchestrator）
 
 通过多家「接口AI jiekou / 即梦 / 可灵 / Gemini / 其它中转」适配器生成图片与视频，
 按「主用供应商 + 回退链」依次尝试：没配密钥或不支持该能力的自动跳过，
@@ -13,7 +13,7 @@ VisionBridge — 素材生成入口（orchestrator）
                              [--output-dir assets/videos] [--provider kling]
     python generate.py providers      # 列出当前配置下可用的供应商与能力
 
-配置：默认读 Skill 根目录的 config.json，可用 --config 或环境变量 VISIONBRIDGE_CONFIG 覆盖。
+配置：默认读 Skill 根目录的 config.json，可用 --config 或环境变量 IMGVIDEO_CONFIG 覆盖。
 """
 
 import argparse
@@ -42,8 +42,8 @@ def load_config(explicit):
     candidates = []
     if explicit:
         candidates.append(Path(explicit))
-    if os.environ.get("VISIONBRIDGE_CONFIG"):
-        candidates.append(Path(os.environ["VISIONBRIDGE_CONFIG"]))
+    if os.environ.get("IMGVIDEO_CONFIG"):
+        candidates.append(Path(os.environ["IMGVIDEO_CONFIG"]))
     candidates.append(SKILL_ROOT / "config.json")
     path = next((p for p in candidates if p.is_file()), None)
     if path is None:
@@ -208,7 +208,7 @@ def cmd_providers(args, cfg):
 # ---------- 入口 ----------
 
 def main():
-    ap = argparse.ArgumentParser(description="VisionBridge 素材生成")
+    ap = argparse.ArgumentParser(description="Img-Video 素材生成")
     ap.add_argument("--config")
     sub = ap.add_subparsers(dest="command", required=True)
 
