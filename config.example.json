@@ -1,4 +1,10 @@
 {
+  "_readme": [
+    "复制本文件为 config.json 后填入真实密钥（config.json 已被 .gitignore 忽略）。",
+    "至少配置一个供应商即可用。_readme / _note 字段仅作注释，脚本会忽略。",
+    "字段含义与各模型差异见 references/providers.md。"
+  ],
+
   "default_provider": "jiekou",
   "fallback": ["ark", "kling", "gemini"],
 
@@ -9,6 +15,7 @@
 
   "providers": {
     "jiekou": {
+      "_note": "接口AI 多模型中转（默认）。示例为 Midjourney 文生图 + Veo 3.1 图生视频。",
       "type": "jiekou",
       "base_url": "https://api.highwayapi.ai",
       "api_key": "sk-jiekou-xxxx",
@@ -25,6 +32,7 @@
     },
 
     "ark": {
+      "_note": "字节即梦（火山方舟，直连）。凭据：api_key。",
       "type": "ark",
       "base_url": "https://ark.cn-beijing.volces.com/api/v3",
       "api_key": "ark-xxxx",
@@ -33,6 +41,7 @@
     },
 
     "kling": {
+      "_note": "快手可灵（直连）。凭据：access_key + secret_key（自动签发 JWT）。",
       "type": "kling",
       "base_url": "https://api.klingai.com",
       "access_key": "your-kling-access-key",
@@ -42,6 +51,7 @@
     },
 
     "gemini": {
+      "_note": "Google Imagen / Veo（直连）。凭据：api_key，以 ?key= 传。",
       "type": "gemini",
       "base_url": "https://generativelanguage.googleapis.com",
       "api_key": "AIza-xxxx",
@@ -50,6 +60,7 @@
     },
 
     "relay": {
+      "_note": "其它 OpenAI 兼容中转。不支持的能力把模型名设为 null。",
       "type": "relay",
       "base_url": "https://another-openai-compatible-relay/v1",
       "api_key": "sk-xxxx",

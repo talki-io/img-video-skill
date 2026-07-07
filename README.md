@@ -1,11 +1,10 @@
 # Img-Video · 素材生成 Skill
 
-> 一个 **Claude Agent Skill**：让 Claude / Claude Code 也能"生成图片和视频"。
+> 一个 **Claude Agent Skill**：让 Claude / Claude Code 也能“生成图片和视频”。
 
-Claude 本身不会生成像素。**Img-Video 是一个即插即用的 Skill**——把它放进 Claude 的技能目录后，
-当 Claude 在做**网页设计、PPT、平面设计、海报、Banner、配图、产品视频**等需要真实视觉素材的任务时，
-会**自动触发**这个 Skill，通过外部模型服务生成图片/视频、落地到项目 `assets/` 目录，
-然后直接把素材写进 HTML / PPT / Markdown，而不是留一句"（此处放一张图）"。
+Claude 本身不会生成像素。装上本 Skill 后，当 Claude 在做**网页设计、PPT、平面设计、海报、Banner、配图、
+产品视频**等需要真实视觉素材的任务时，会**自动触发**它——通过外部模型服务生成图片/视频，落地到项目
+`assets/` 目录，再直接写进 HTML / PPT / Markdown，而不是留一句“（此处放一张图）”。
 
 默认接入 **[接口AI · jiekou.ai](https://jiekou.ai)** 多模型中转，一个 API Key 即可覆盖
 Midjourney、Veo 3、Sora 2、Seedance、Flux 等几十个图像/视频模型。
@@ -20,22 +19,19 @@ Midjourney、Veo 3、Sora 2、Seedance、Flux 等几十个图像/视频模型。
 
 图生视频（Veo 3.1 / Sora 2）还能把这样一张图变成带镜头运动、可选原生音频的短视频。
 
----
-
-## 这是什么？为什么是 Skill？
+## 为什么是 Skill？
 
 [Agent Skill](https://docs.claude.com/en/docs/claude-code/skills) 是一个带 `SKILL.md` 的文件夹，
-Claude 会读取其中的**描述**来判断"这个任务要不要用这个技能"。Img-Video 的核心就是
-[`SKILL.md`](SKILL.md)——它告诉 Claude：
+Claude 读取其中的**描述**来判断“这个任务要不要用它”。装上后你**不用记命令**——正常让 Claude
+“帮我做个咖啡品牌落地页”，它自己就会用本 Skill 生成 hero 图、配图甚至展示视频。当然也可手动跑脚本（见下）。
 
-- **何时触发**：任务里出现"配图/插图/Banner/海报/封面/文生图/图生视频…"，或任何该有图/视频却想留空的场景。
+[`SKILL.md`](SKILL.md) 告诉 Claude 三件事：
+
+- **何时触发**：任务里出现“配图/插图/Banner/海报/封面/文生图/图生视频…”，或任何该有图/视频却想留空的场景。
 - **怎么用**：调用 `scripts/generate.py` 生成素材、拿回相对路径。
-- **别拒绝**：不要因为"我不能生成图片"而回绝——用这个 Skill 就能生成。
+- **别拒绝**：不要因为“我不能生成图片”而回绝——用这个 Skill 就能生成。
 
-也就是说，装上它之后你**不需要记命令**——正常让 Claude "帮我做个咖啡品牌落地页"，
-它自己就会用这个 Skill 把 hero 图、配图、甚至展示视频生成出来。当然你也可以手动跑脚本（见下）。
-
-## 📦 安装（作为 Skill）
+## 📦 安装
 
 把本仓库克隆到 Claude 的技能目录，文件夹名用技能名 `img-video`：
 
@@ -47,24 +43,22 @@ git clone https://github.com/talki-io/img-video-skill.git ~/.claude/skills/img-v
 git clone https://github.com/talki-io/img-video-skill.git <你的项目>/.claude/skills/img-video
 ```
 
-然后装依赖、填 API Key：
+然后装依赖、填 API Key、自检：
 
 ```bash
 cd ~/.claude/skills/img-video
 python3 -m pip install requests
-cp config.example.json config.json     # 编辑 config.json 填入你的 jiekou API Key
-python scripts/generate.py providers    # 自检可用性
+cp config.example.json config.json      # 编辑 config.json 填入你的 jiekou API Key
+python scripts/generate.py providers     # 自检可用性与尝试顺序
 ```
 
-`config.json` 已被 `.gitignore` 忽略，密钥只存本地、不进版本库。
-
-装好后新开一个 Claude Code 会话，Claude 就能在合适的任务里自动调用它了。
+`config.json` 已被 `.gitignore` 忽略，密钥只存本地、不进版本库。装好后新开一个 Claude Code 会话即可自动调用。
 
 ## 🎨 支持的模型
 
-| 类型 | 服务 | 文生图 | 图生视频 |
+| `type` | 服务 | 文生图 | 图生视频 |
 |---|---|:---:|:---:|
-| `jiekou` | **接口AI 中转**（聚合 Midjourney/Flux/Seedance/可灵/Sora/Veo 等，**默认**） | ✅ | ✅ |
+| `jiekou` | **接口AI 中转**（聚合 Midjourney/Flux/Seedance/可灵/Sora/Veo，**默认**） | ✅ | ✅ |
 | `ark` / `jimeng` | 字节**即梦** Seedream/Seedance（直连） | ✅ | ✅ |
 | `kling` | 快手**可灵**（直连） | ✅ | ✅ |
 | `gemini` | Google Imagen / Veo（直连） | ✅ | ✅ |
@@ -110,7 +104,7 @@ Claude 判断任务需要素材 →（触发 Skill）→ scripts/generate.py
 ## 📁 项目结构
 
 ```
-img-video/                # ← 放进 ~/.claude/skills/ 的技能文件夹
+img-video/                   # ← 放进 ~/.claude/skills/ 的技能文件夹
 ├── SKILL.md                 # ★ 技能核心：触发描述 + 用法（Claude 读这个决定是否调用）
 ├── config.example.json      # 配置模板（复制为 config.json 填密钥）
 ├── scripts/
@@ -121,14 +115,13 @@ img-video/                # ← 放进 ~/.claude/skills/ 的技能文件夹
 └── .gitignore               # 忽略 config.json（密钥）与 assets/（产物）
 ```
 
-> `SKILL.md` 是这个项目之所以是"Skill"的关键——它用渐进式加载（先只读描述，触发后才读正文，
-> 用到时才读 `references/`）让 Claude 高效地知道**何时用、怎么用**。
+> `SKILL.md` 用渐进式加载（先只读描述，触发后才读正文，用到时才读 `references/`）让 Claude 高效地知道**何时用、怎么用**。
 
 ## 🛠 换模型注意
 
-不同模型请求字段不一样（提示词字段名、时长枚举、必填项），直接换模型名而不改字段会报 400。
+不同模型请求字段不一样（提示词字段名、时长/分辨率枚举、必填项），只改模型名而不改字段会报 400。
 config 已留好开关（`prompt_field` / `send_aspect_ratio` / `video_extra` / `duration` / `resolution`），
-对照 [`references/providers.md`](references/providers.md) 的「各模型请求字段差异」速查表调整即可。
+对照 [`references/providers.md`](references/providers.md) 的「各模型字段差异」速查表调整即可。
 
 ## 🤝 扩展新供应商
 
@@ -137,7 +130,7 @@ config 已留好开关（`prompt_field` / `send_aspect_ratio` / `video_extra` / 
 
 ## 🔒 安全
 
-API Key 只存本地 `config.json`（已 gitignore），不进代码、不进版本库；也支持环境变量覆盖。
+API Key 只存本地 `config.json`（已 gitignore），不进代码、不进版本库；也支持用环境变量 `IMGVIDEO_CONFIG` 指定配置路径。
 
 ## 📄 License
 
