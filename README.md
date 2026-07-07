@@ -10,6 +10,16 @@ Claude 本身不会生成像素。**VisionBridge 是一个即插即用的 Skill*
 默认接入 **[接口AI · jiekou.ai](https://jiekou.ai)** 多模型中转，一个 API Key 即可覆盖
 Midjourney、Veo 3、Sora 2、Seedance、Flux 等几十个图像/视频模型。
 
+## 🖼 示例效果
+
+<p align="center">
+  <img src="docs/demo-midjourney.png" width="420" alt="VisionBridge 示例：Midjourney 生成的雪地柴犬">
+</p>
+
+<p align="center"><sub>由本 Skill 调用 <b>Midjourney</b>（<code>mj-txt2img</code>）真实生成 · 提示词：<i>一只戴红色围巾的柴犬坐在雪地里，扁平插画风，薄荷绿背景</i></sub></p>
+
+图生视频（Veo 3.1 / Sora 2）还能把这样一张图变成带镜头运动、可选原生音频的短视频。
+
 ---
 
 ## 这是什么？为什么是 Skill？
