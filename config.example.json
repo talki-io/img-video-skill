@@ -1,0 +1,60 @@
+{
+  "default_provider": "jiekou",
+  "fallback": ["ark", "kling", "gemini"],
+
+  "timeout": 120,
+  "max_retries": 3,
+  "poll_interval": 5,
+  "poll_timeout": 600,
+
+  "providers": {
+    "jiekou": {
+      "type": "jiekou",
+      "base_url": "https://api.highwayapi.ai",
+      "api_key": "sk-jiekou-xxxx",
+
+      "image_model": "mj-txt2img",
+      "prompt_field": "text",
+      "send_aspect_ratio": false,
+
+      "video_model": "veo-3.1-generate-img2video",
+      "resolution": "720p",
+      "video_extra": { "generate_audio": false, "duration_seconds": 8 },
+
+      "query_path": "/v3/async/task-result"
+    },
+
+    "ark": {
+      "type": "ark",
+      "base_url": "https://ark.cn-beijing.volces.com/api/v3",
+      "api_key": "ark-xxxx",
+      "image_model": "doubao-seedream-3-0-t2i-250415",
+      "video_model": "doubao-seedance-1-0-lite-i2v-250428"
+    },
+
+    "kling": {
+      "type": "kling",
+      "base_url": "https://api.klingai.com",
+      "access_key": "your-kling-access-key",
+      "secret_key": "your-kling-secret-key",
+      "image_model": "kling-v1",
+      "video_model": "kling-v1"
+    },
+
+    "gemini": {
+      "type": "gemini",
+      "base_url": "https://generativelanguage.googleapis.com",
+      "api_key": "AIza-xxxx",
+      "image_model": "imagen-3.0-generate-002",
+      "video_model": "veo-2.0-generate-001"
+    },
+
+    "relay": {
+      "type": "relay",
+      "base_url": "https://another-openai-compatible-relay/v1",
+      "api_key": "sk-xxxx",
+      "image_model": "gpt-image-1",
+      "video_model": null
+    }
+  }
+}
